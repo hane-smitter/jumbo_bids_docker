@@ -1,0 +1,47 @@
+version: "3.9"
+services:
+  api:
+    container_name: jumbobids_api
+    restart: unless-stopped
+    image: jumbobids_api_prod:1.0.0
+    build:
+      context: stem
+#      target: production
+      dockerfile: Dockerfile
+    ports:
+      - "8000:5000"
+    networks:
+      - shared-network
+
+  client.admin:
+    container_name: jumbobids_admin
+    restart: unless-stopped
+    image: jumbobids_admin_prod:1.0.0
+    build:
+#      target: production
+      context: client/admin
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    networks:
+      - shared-network
+    depends_on:
+      - api
+
+  client.user:
+    container_name: jumbobids_user
+    restart: unless-stopped
+    image: jumbobids_user_prod:1.0.0
+    build:
+      context: client/user
+#      target: production
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - shared-network
+    depends_on:
+      - api
+
+networks:
+  shared-network:
