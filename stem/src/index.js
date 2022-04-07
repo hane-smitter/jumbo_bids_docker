@@ -12,7 +12,7 @@ import { errorHandler } from "./_helpers/error/error-handler.js";
 import ErrorRes from "./_helpers/error/ErrorResponse.js";
 // import { updateBidabbles } from "./controllers/admin/bids.js";
 import connectCacheSevice from "./db/services/cache.js";
-import connectSearch from "./db/services/search-api.js";
+// import connectSearch from "./db/services/search-api.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,7 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(express.static(path.join(__dirname, "../public")));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8001;
 
 app.use("/api", routes);
 app.get("/varenvs", (req, res) => {
@@ -58,10 +58,26 @@ app.all("*", (req, res, next) => {
 
 app.use(errorHandler);
 
-DB.on("connected", function () {
-	connectSearch();
-	console.log(chalk.rgb(208, 60, 240)("DB is connected"));
+
+app.on("ready", function () {
 	app.listen(PORT, () =>
 		console.log(chalk.rgb(208, 60, 240)(`Server listening on port: ${PORT}`))
 	);
+});
+DB.on("connected", function () {
+	// connectSearch();
+	console.log(chalk.rgb(208, 60, 240)("DB is connected"));
+	app.emit("ready");
+}).on("error", function () {
+	console.log(chalk.rgb(208, 60, 240)("DB NOT CONNECTED!"));
+});
+
+// handling nodemon restart issues
+process.once("SIGUSR2", function () {
+	process.kill(process.pid, "SIGUSR2");
+});
+
+process.on("SIGINT", function () {
+	// this is only called on ctrl+c, not restart
+	process.kill(process.pid, "SIGINT");
 });

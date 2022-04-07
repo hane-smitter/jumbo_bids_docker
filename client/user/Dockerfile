@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:16-alpine AS production
 
 ENV NODE_ENV=production
 

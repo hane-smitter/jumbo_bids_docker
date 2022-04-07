@@ -1,0 +1,113 @@
+version: "3.9"
+
+networks:
+  shared-network:
+  redis_net:
+  mongodb_net:
+volumes:
+  mongodb_data_container:
+    driver: local
+  cache:
+    driver: local
+
+services:
+  redis:
+    container_name: ${REDIS_CONTAINER_NAME}
+    image: redis
+    # hostname: 127.0.0.1
+    restart: always
+    ports:
+      - "6379:6379"
+    command: "redis-server --save 60 1 --loglevel warning --requirepass ${REDIS_PASS}"
+    expose:
+      - 6379
+    networks:
+      redis_net:
+        aliases:
+          - redis
+          - connectredis
+    volumes:
+      - cache:/data/cache
+  mongodb:
+    container_name: ${MONGO_CONTAINER_NAME}
+    image: mongo:4.4.6
+    # env_file:
+    #   - ./stem/.env
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+    #   MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    networks:
+      mongodb_net:
+        aliases:
+          - mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+
+  mongo-express:
+    container_name: ${ME_CONTAINER_NAME}
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    networks:
+      - mongodb_net
+    depends_on:
+      - mongodb
+    # environment:
+    #   ME_CONFIG_MONGODB_ADMINUSERNAME: root
+    #   ME_CONFIG_MONGODB_ADMINPASSWORD: example
+    #   ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+
+  api:
+    container_name: dev_jumbobids_api
+    restart: unless-stopped
+    image: jumbobids_api_dev:1.0.0
+    environment:
+      - NODE_ENV="development"
+    env_file:
+      - ./stem/.env
+    build:
+      context: ./stem
+      target: development
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - mongodb
+    networks:
+      - redis_net
+      - mongodb_net
+      - shared-network
+
+  client.admin:
+    container_name: dev_jumbobids_admin
+    restart: unless-stopped
+    image: jumbobids_admin_dev:1.0.0
+    build:
+      context: client/admin
+      target: development
+      dockerfile: Dockerfile.dev
+    ports:
+      - "6000:6000"
+    networks:
+      - shared-network
+    depends_on:
+      - api
+
+  client.user:
+    container_name: dev_jumbobids_user
+    restart: unless-stopped
+    image: jumbobids_user_dev:1.0.0
+    build:
+      context: client/user
+      target: development
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4000:4000"
+    networks:
+      - shared-network
+    depends_on:
+      - api

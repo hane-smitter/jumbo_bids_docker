@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
 import chalk from "chalk";
 
-const CONNECTION_URL = process.env.MONGODB;
+let CONNECTION_URL;
+process.env.NODE_ENV === "development"
+	? (CONNECTION_URL = process.env.MONGODB_LOCAL)
+	: (CONNECTION_URL = process.env.MONGODB);
 
 mongoose.connect(CONNECTION_URL, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
 });
-
 
 /* 
 const client = mongoose.connection.client;

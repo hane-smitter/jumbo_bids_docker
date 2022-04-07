@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:16-alpine as build
 
 ENV NODE_ENV=production
 
@@ -7,9 +7,10 @@ WORKDIR /usr/src/client/admin
 COPY package*.json ./
 RUN npm install --production
 COPY . .
+RUN npm run build
 
-# RUN npm run build
-# CMD ["node", "src/index.js"]
-CMD ["sh", "-c", "npm start"]
+FROM nginx
+COPY --from=build /usr/src/client/admin/build /usr/share/nginx/html
+COPY ./server-engine/nginx.conf /etc/nginx/sites-enabled/default
 
-#EXPOSE 5001
+# Expose 7000

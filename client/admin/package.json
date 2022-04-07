@@ -16,7 +16,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint ./",
-    "lint-fix": "eslint ./ --fix"
+    "lint-fix": "eslint ./ --fix",
+    "docker-build:dev": "node scripts/dockerBuild.cjs",
+    "start-docker:dev": "node scripts/dockerContainer.cjs"
   },
   "eslintConfig": {
     "extends": "react-app"

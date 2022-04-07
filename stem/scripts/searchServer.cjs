@@ -1,6 +1,6 @@
 // runServer.js
-import "dotenv/config";
-import { exec } from "child_process";
+require("dotenv").config()
+const exec = require("child_process").exec;
 
 // const command_1 = `mkdir /tmp/typesense-data`
 
