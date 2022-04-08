@@ -40,6 +40,7 @@ services:
       mongodb_net:
         aliases:
           - mongo
+          - database
     ports:
       - 27017:27017
     volumes:
@@ -61,11 +62,12 @@ services:
     #   ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
 
   api:
-    container_name: dev_jumbobids_api
+    container_name: ${API_CONTAINER_NAME}
     restart: unless-stopped
-    image: jumbobids_api_dev:1.0.0
+    image: ${API_IMAGE_NAME}
     environment:
       - NODE_ENV="development"
+      - RUN_CONTEXT_ENV="docker"
     env_file:
       - ./stem/.env
     build:
@@ -73,7 +75,7 @@ services:
       target: development
       dockerfile: Dockerfile.dev
     ports:
-      - "8000:8000"
+      - "${API_DEV_PORT}:${API_DEV_PORT}"
     depends_on:
       - redis
       - mongodb
@@ -83,30 +85,30 @@ services:
       - shared-network
 
   client.admin:
-    container_name: dev_jumbobids_admin
+    container_name: ${CLIENT.ADMIN_CONTAINER_NAME}
     restart: unless-stopped
-    image: jumbobids_admin_dev:1.0.0
+    image: ${CLIENT.ADMIN_IMAGE_NAME}
     build:
       context: client/admin
       target: development
       dockerfile: Dockerfile.dev
     ports:
-      - "6000:6000"
+      - "{CLIENT.ADMIN_DEV_PORT}:{CLIENT.ADMIN_DEV_PORT}"
     networks:
       - shared-network
     depends_on:
       - api
 
   client.user:
-    container_name: dev_jumbobids_user
+    container_name: ${CLIENT.USER_CONTAINER_NAME}
     restart: unless-stopped
-    image: jumbobids_user_dev:1.0.0
+    image: ${CLIENT.USER_IMAGE_NAME}
     build:
       context: client/user
       target: development
       dockerfile: Dockerfile.dev
     ports:
-      - "4000:4000"
+      - "${CLIENT.USER_DEV_PORT}:${CLIENT.USER_DEV_PORT}"
     networks:
       - shared-network
     depends_on:

@@ -1,18 +1,14 @@
 // build image.js
-// require("dotenv").config()
+const path = require("path");
 const exec = require("child_process").exec;
-// const path = require("path");
 
-const PORT = process.env.PORT || 5000;
-// const workDir = path.join(__dirname, "..");
+const dockerEnvPath = path.join(__dirname, "../../.env");
+require("dotenv").config({ path: dockerEnvPath });
 
-const command = `docker build -t jumbobids_api_dev:1.0.0 -f Dockerfile.dev .`;
-// console.log("command", command);
-
-// const command = `docker run -d -p 5000:5000 --env-file=../.env alpine`;
+const command = `docker build -t ${process.env.API_IMAGE_NAME} -f Dockerfile.dev .`;
 
 exec(command, err => {
-	if (!err) console.log("Docker BUILD is started...✰✨");
+	if (!err) console.log("Docker Image is BUILT...✰✨(" + process.env.API_IMAGE_NAME + ")");
 
 	if (err) {
 		console.log("Error BUILDING image: ", err);

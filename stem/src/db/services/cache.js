@@ -3,8 +3,9 @@ import chalk from "chalk";
 import redis from "redis";
 
 // Connect to redis at 127.0.0.1 port 6379 no password.
+const redisURL = process.env.REDIS_URL;
 const client = redis.createClient({
-  url: process.env.REDIS_URL,
+  url: redisURL,
 });
 const set = client.hSet.bind(client);
 const get = client.hGet.bind(client);

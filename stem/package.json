@@ -11,7 +11,8 @@
     "start-server:redis": "node scripts/redisServer.cjs",
     "start-server:mongo": "node scripts/mongoContainer.cjs",
     "docker-build:dev": "node scripts/dockerBuild.cjs",
-    "start-docker:dev": "node scripts/dockerContainer.cjs"
+    "start-docker:dev": "node scripts/dockerContainer.cjs",
+    "clean-dockerimg-untagged:dev": "docker rmi $(docker images --filter \"dangling=true\" -q --no-trunc)"
   },
   "keywords": [],
   "author": "",
