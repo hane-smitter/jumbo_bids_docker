@@ -2,10 +2,11 @@ import mongoose from "mongoose";
 import chalk from "chalk";
 
 let CONNECTION_URL = process.env.MONGODB;
-if(process.env.NODE_ENV === "development") {
-	CONNECTION_URL = process.env.MONGODB_LOCAL
-} else if(process.env.NODE_ENV === "development" && process.env.RUN_CONTEXT_ENV === "docker") {
+if(process.env.NODE_ENV === "development" && process.env.RUN_CONTEXT_ENV === "docker") {
+	console.log("process.env.RUN_CONTEXT_ENV", process.env.RUN_CONTEXT_ENV);
 	CONNECTION_URL = process.env.MONGODB_DOCKER;
+} else if(process.env.NODE_ENV === "development") {
+	CONNECTION_URL = process.env.MONGODB_LOCAL
 }
 
 mongoose.connect(CONNECTION_URL, {

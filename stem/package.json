@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "jumbobids-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,11 +7,16 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon --delay 500ms src/index.js",
-    "start-server:search": "node scripts/searchServer.cjs",
-    "start-server:redis": "node scripts/redisServer.cjs",
-    "start-server:mongo": "node scripts/mongoContainer.cjs",
+    "start-server:search": "node scripts/typesenseContainerUp.cjs",
+    "stop-server:search": "node scripts/typesenseContainerDown.cjs",
+    "start-server:redis": "node scripts/redisContainerUp.cjs",
+    "stop-server:redis": "node scripts/redisContainerDown.cjs",
+    "start-server:mongo": "node scripts/mongoContainerUp.cjs",
+    "stop-server:mongo": "node scripts/mongoContainerDown.cjs",
     "docker-build:dev": "node scripts/dockerBuild.cjs",
-    "start-docker:dev": "node scripts/dockerContainer.cjs",
+    "docker-rmi:dev": "node scripts/dockerRmi.cjs",
+    "start-docker:dev": "node scripts/dockerContainerUp.cjs",
+    "stop-docker:dev": "node scripts/dockerContainerDown.cjs",
     "clean-dockerimg-untagged:dev": "docker rmi $(docker images --filter \"dangling=true\" -q --no-trunc)"
   },
   "keywords": [],
