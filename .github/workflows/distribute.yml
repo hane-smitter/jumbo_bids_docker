@@ -32,6 +32,7 @@ jobs:
           echo "have copied to jumbo_bids_stem"
           echo "delete everything in brsnch"
           rm -rf *
+          ls -al
           echo "deleteD everything branch!"
           echo "seeing contents of jumbo_bids_stem"
           ls -al ../jumbo_bids_stem
@@ -63,6 +64,7 @@ jobs:
 
           git config --global user.name "hane-smitter"
           git config --global user.email "hanesmitter3@gmail.com"
+          git config -l
 
           git add -A
           git commit -m "Stem branch update $GITHUB_JOB"
