@@ -21,7 +21,7 @@ jobs:
 
           mkdir jumbo_bids_stem
           cd jumbobids
-          git checkout -B stem
+          git checkout -B stem --orphan
           echo $(pwd)
           ls -al
           # cp -rf ./.git ../jumbo_bids_stem
@@ -64,7 +64,7 @@ jobs:
 
           git config --global user.name "hane-smitter"
           git config --global user.email "hanesmitter3@gmail.com"
-          git remote set-url origin https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
+          git remote set-url origin https://hane-smitter:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
           git config -l
 
           git add -A
