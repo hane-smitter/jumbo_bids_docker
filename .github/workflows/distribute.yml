@@ -31,7 +31,7 @@ jobs:
           cp -rf ./stem ../jumbo_bids_stem/
           echo "have copied to jumbo_bids_stem"
           echo "delete everything in brsnch"
-          rm -rf .
+          rm -rf *
           ls -al
           echo "deleteD everything branch!"
           echo "seeing contents of jumbo_bids_stem"
