@@ -1,0 +1,33 @@
+name: Deploy backend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  distribute:
+    runs-on: ubuntu-latest
+    name: "Distribute code"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+      - name: "Split code to branches"
+        env:
+          GH_ACESS_TKN: ${{ secrets.GH_ACESS_TKN }}
+        run: |
+          git clone https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
+
+          cd jumbobids
+          git checkout -B stem
+          find . -maxdepth 2 -type d \(-path ./.git -o -path ./stem \) -prune -o -delete
+          mv ./stem/{.,} .
+          rmdir stem
+
+          git add -A
+          git commit -m "Stem branch update"
+
+          git remote -v
+
+          git push --set-upstream origin stem

@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 .env*
+*.log
 !.env*.example
 .bak
 /public/imgs/products/*
