@@ -33,8 +33,12 @@ jobs:
           echo "copy to jumbo_bids_stem"
           cp -rf ./stem ../jumbo_bids_stem/
           echo "have copied to jumbo_bids_stem"
+          echo "seeing contents of jumbo_bids_stem"
+          ls -al ../jumbo_bids_stem
           cd ../jumbo_bids_stem
-          echo "At jumbo_bids_stem and finding  ./stem"
+          echo "At jumbo_bids_stem and finding doing ls and  ./stem"
+          ls
+          echo "command find ./stem"
           find ./stem ! -name "." ! -name ".." -type f,d -exec mv -t . '{}' '+'
           rmdir stem
 
