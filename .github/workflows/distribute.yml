@@ -20,6 +20,7 @@ jobs:
           git clone https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
 
           mkdir jumbo_bids
+          pwd
           cd jumbobids
           pwd
           git checkout -B stem
