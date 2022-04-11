@@ -23,7 +23,7 @@ jobs:
           git checkout -B stem
           find . -maxdepth 2 -type d \( -path ./.git -o -path ./stem \) -prune -o -exec rm -rf '{}' '+'
           shopt -s dotglob
-          mv ./stem/* .
+          mv ./stem/* || true .
           rmdir stem
 
           git add -A
