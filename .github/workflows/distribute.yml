@@ -21,7 +21,9 @@ jobs:
 
           mkdir jumbo_bids
           cd jumbobids
+          pwd
           git checkout -B stem
+          echo $(pwd)
           cp -r .git ../jumbo_bids
           cp -r stem ../jumbo_bids
           cd ../jumbo_bids
