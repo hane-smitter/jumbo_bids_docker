@@ -19,7 +19,7 @@ jobs:
         run: |
           git clone https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
 
-          mkdir jumbo_bids
+          mkdir jumbo_bids_stem
           pwd
           ls
           cd jumbobids
@@ -27,9 +27,10 @@ jobs:
           git checkout -B stem
           echo $(pwd)
           ls -al
-          cp -r ./.git ../jumbo_bids
-          cp -r ./stem ../jumbo_bids
-          cd ../jumbo_bids
+          cp -rf ./.git ../jumbo_bids_stem
+          ls -al ../jumbo_bids_stem
+          cp -rf ./stem ../jumbo_bids_stem
+          cd ../jumbo_bids_stem
           find ./stem ! -name "." ! -name ".." -type f,d -exec mv -t . '{}' '+'
           rmdir stem
 
