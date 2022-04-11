@@ -21,7 +21,7 @@ jobs:
 
           cd jumbobids
           git checkout -B stem
-          find . -maxdepth 2 -type d \( -path ./.git -o -path ./stem \) -prune -o -exec rm -rf '{}'
+          find . -maxdepth 2 -type d \( -path ./.git -o -path ./stem \) -prune -o -exec rm -rf '{}' '+'
           mv ./stem/{.,} .
           rmdir stem
 
