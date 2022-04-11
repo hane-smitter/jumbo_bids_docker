@@ -34,6 +34,8 @@ jobs:
           git add -A
           git commit -m "Stem branch update $GITHUB_JOB"
 
+          git push --set-upstream origin stem -f
+
           # client.user source code
           git checkout main
           git checkout --orphan client.user
@@ -42,6 +44,8 @@ jobs:
           cp -rf ../jumbo_bids_tmp/user/* .
           git add -A
           git commit -m "Client.user branch update $GITHUB_JOB"
+
+          git push --set-upstream origin client.user -f
 
           # client.admin source code
           git checkout main
@@ -52,4 +56,4 @@ jobs:
           git add -A
           git commit -m "Client.admin branch update $GITHUB_JOB"
 
-          git push --set-upstream origin main -f
+          git push --set-upstream origin client.admin -f
