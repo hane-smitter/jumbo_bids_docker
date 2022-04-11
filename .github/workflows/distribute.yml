@@ -19,9 +19,11 @@ jobs:
         run: |
           git clone https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
 
+          mkdir jumbo_bids
           cd jumbobids
           git checkout -B stem
-          find . -maxdepth 2 -type d \( -path ./.git -o -path ./stem \) -prune -o -exec rm -rf '{}' '+'
+          find . -maxdepth 2 -type d \( -path ./.git -o -path ./stem \) -prune -exec cp -rft ../jumbo_bids '{}' '+'
+          cd ../jumbo_bids
           find ./stem ! -name "." ! -name ".." -type f,d -exec mv -t . '{}' '+'
           rmdir stem
 
