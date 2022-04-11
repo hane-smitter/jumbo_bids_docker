@@ -22,6 +22,10 @@ jobs:
           mkdir jumbo_bids_tmp
           cd jumbobids
 
+          git config --global user.name "hane-smitter"
+          git config --global user.email "hanesmitter3@gmail.com"
+          git remote set-url origin https://hane-smitter:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
+
           # stem source code
           git checkout --orphan stem
           cp -rf ./stem ../jumbo_bids_tmp/
@@ -45,9 +49,5 @@ jobs:
           cp -rf ../jumbo_bids_tmp/admin/* .
           git add -A
           git commit -m "Client.admin branch update $GITHUB_JOB"
-
-          git config --global user.name "hane-smitter"
-          git config --global user.email "hanesmitter3@gmail.com"
-          git remote set-url origin https://hane-smitter:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
 
           git push --set-upstream origin main -f
