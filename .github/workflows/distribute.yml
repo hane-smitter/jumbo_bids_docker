@@ -19,57 +19,35 @@ jobs:
         run: |
           git clone https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
 
-          mkdir jumbo_bids_stem
+          mkdir jumbo_bids_tmp
           cd jumbobids
+
+          # stem source code
           git checkout --orphan stem
-          echo $(pwd)
-          ls -al
-          # cp -rf ./.git ../jumbo_bids_stem
-          echo "contents of jumbobisstem"
-          ls -al ../jumbo_bids_stem
-          echo "copy to jumbo_bids_stem"
-          cp -rf ./stem ../jumbo_bids_stem/
-          echo "have copied to jumbo_bids_stem"
-          echo "delete everything in brsnch"
+          cp -rf ./stem ../jumbo_bids_tmp/
           rm -rf *
-          ls -al
-          echo "deleteD everything branch!"
-          echo "seeing contents of jumbo_bids_stem"
-          ls -al ../jumbo_bids_stem
-          echo "copy frm jumbo_bids_stem/stem"
-          cp -rf ../jumbo_bids_stem/stem/* .
-          echo "copied jumbo_bids_stem/stem"
-          echo "seeing results"
-          ls -al
-          # cd ../jumbo_bids_stem
-          # echo "At jumbo_bids_stem and finding doing ls and  ./stem"
-          # ls
-          # echo "seeing conytent of stem"
-          # ls -al ./stem
-          # echo "going into stem directory"
-          # cd ./stem
-          # echo "contents of src folder"
-          # ls -al ./src
-          # echo "matched filter values of find"
-          # echo $(find . ! -name "." ! -name ".." -type f,d -prune)
-          # echo "command find inside stem direectory"
-          # find . ! -name "." ! -name ".." -type f,d -prune -exec mv -t .. '{}' '+'
-          # echo "goind out of stem directiory"
-          # cd ..
-          # echo "is stem sempty?"
-          # ls -al ./stem
-          # echo "removing stem directory: should be empty"
-          # rmdir stem
-          # echo "empty dir has been removed!!!!"
+          cp -rf ../jumbo_bids_tmp/stem/* .
+          git add -A
+          git commit -m "Stem branch update $GITHUB_JOB"
+
+          # client.user source code
+          git checkout --orphan client.user
+          cp -rf ./client/user ../jumbo_bids_tmp/
+          rm -rf *
+          cp -rf ../jumbo_bids_tmp/user/* .
+          git add -A
+          git commit -m "Client.user branch update $GITHUB_JOB"
+
+          # client.admin source code
+          git checkout --orphan client.admin
+          cp -rf ./client/admin ../jumbo_bids_tmp/
+          rm -rf *
+          cp -rf ../jumbo_bids_tmp/admin/* .
+          git add -A
+          git commit -m "Client.admin branch update $GITHUB_JOB"
 
           git config --global user.name "hane-smitter"
           git config --global user.email "hanesmitter3@gmail.com"
           git remote set-url origin https://hane-smitter:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
-          git config -l
 
-          git add -A
-          git commit -m "Stem branch update $GITHUB_JOB"
-
-          git remote -v
-
-          git push --set-upstream origin stem -f
+          git push --set-upstream origin main -f
