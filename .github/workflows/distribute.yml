@@ -54,6 +54,10 @@ jobs:
           ls -al ./stem
           echo "removing stem directory: should be empty"
           rmdir stem
+          echo "empty dir has been removed!!!!"
+
+          git config --global user.name "Hane Smitter"
+          git config --global user.email "hanesmitter3@gmail.com"
 
           git add -A
           git commit -m "Stem branch update $GITHUB_JOB"
