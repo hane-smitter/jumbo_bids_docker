@@ -30,9 +30,11 @@ jobs:
           cp -rf ./.git ../jumbo_bids_stem
           echo "contents of jumbobisstem"
           ls -al ../jumbo_bids_stem
-          echo "copy to stem"
-          cp -rf ./stem ../jumbo_bids_stem/stemm/
+          echo "copy to jumbo_bids_stem"
+          cp -rf ./stem ../jumbo_bids_stem/
+          echo "have copied to jumbo_bids_stem"
           cd ../jumbo_bids_stem
+          echo "At jumbo_bids_stem and finding  ./stem"
           find ./stem ! -name "." ! -name ".." -type f,d -exec mv -t . '{}' '+'
           rmdir stem
 
