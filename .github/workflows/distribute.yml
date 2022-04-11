@@ -38,8 +38,17 @@ jobs:
           cd ../jumbo_bids_stem
           echo "At jumbo_bids_stem and finding doing ls and  ./stem"
           ls
-          echo "command find ./stem"
-          find ./stem ! -name "." ! -name ".." -type f,d -exec mv -t . '{}' '+'
+          echo "seeing conytent of stem"
+          ls -al ./stem
+          echo "going into stem directory"
+          cd ./stem
+          echo "command find inside stem direectory"
+          find . ! -name "." ! -name ".." -type f,d -exec mv -t .. '{}' '+'
+          echo "goind out of stem directiory"
+          cd ..
+          echo "is stem sempty?"
+          ls -al ./stem
+          echo "removing stem directory: should be empty"
           rmdir stem
 
           git add -A
