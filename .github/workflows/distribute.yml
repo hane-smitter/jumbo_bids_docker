@@ -42,8 +42,12 @@ jobs:
           ls -al ./stem
           echo "going into stem directory"
           cd ./stem
+          echo "contents of src folder"
+          ls -al ./src
+          echo "matched filter values of find"
+          echo $(find . ! -name "." ! -name ".." -type f,d -prune)
           echo "command find inside stem direectory"
-          find . ! -name "." ! -name ".." -type f,d -exec mv -t .. '{}' '+'
+          find . ! -name "." ! -name ".." -type f,d -prune -exec mv -t .. '{}' '+'
           echo "goind out of stem directiory"
           cd ..
           echo "is stem sempty?"
