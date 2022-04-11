@@ -20,41 +20,46 @@ jobs:
           git clone https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
 
           mkdir jumbo_bids_stem
-          pwd
-          ls
           cd jumbobids
-          pwd
-          # git checkout -B stem
+          git checkout -B stem
           echo $(pwd)
           ls -al
-          cp -rf ./.git ../jumbo_bids_stem
+          # cp -rf ./.git ../jumbo_bids_stem
           echo "contents of jumbobisstem"
           ls -al ../jumbo_bids_stem
           echo "copy to jumbo_bids_stem"
           cp -rf ./stem ../jumbo_bids_stem/
           echo "have copied to jumbo_bids_stem"
+          echo "delete everything in brsnch"
+          rm -rf *
+          echo "deleteD everything branch!"
           echo "seeing contents of jumbo_bids_stem"
           ls -al ../jumbo_bids_stem
-          cd ../jumbo_bids_stem
-          echo "At jumbo_bids_stem and finding doing ls and  ./stem"
-          ls
-          echo "seeing conytent of stem"
-          ls -al ./stem
-          echo "going into stem directory"
-          cd ./stem
-          echo "contents of src folder"
-          ls -al ./src
-          echo "matched filter values of find"
-          echo $(find . ! -name "." ! -name ".." -type f,d -prune)
-          echo "command find inside stem direectory"
-          find . ! -name "." ! -name ".." -type f,d -prune -exec mv -t .. '{}' '+'
-          echo "goind out of stem directiory"
-          cd ..
-          echo "is stem sempty?"
-          ls -al ./stem
-          echo "removing stem directory: should be empty"
-          rmdir stem
-          echo "empty dir has been removed!!!!"
+          echo "copy frm jumbo_bids_stem/stem"
+          cp -rf ../jumbo_bids_stem/stem/* .
+          echo "copied jumbo_bids_stem/stem"
+          echo "seeing results"
+          ls -al
+          # cd ../jumbo_bids_stem
+          # echo "At jumbo_bids_stem and finding doing ls and  ./stem"
+          # ls
+          # echo "seeing conytent of stem"
+          # ls -al ./stem
+          # echo "going into stem directory"
+          # cd ./stem
+          # echo "contents of src folder"
+          # ls -al ./src
+          # echo "matched filter values of find"
+          # echo $(find . ! -name "." ! -name ".." -type f,d -prune)
+          # echo "command find inside stem direectory"
+          # find . ! -name "." ! -name ".." -type f,d -prune -exec mv -t .. '{}' '+'
+          # echo "goind out of stem directiory"
+          # cd ..
+          # echo "is stem sempty?"
+          # ls -al ./stem
+          # echo "removing stem directory: should be empty"
+          # rmdir stem
+          # echo "empty dir has been removed!!!!"
 
           git config --global user.name "hane-smitter"
           git config --global user.email "hanesmitter3@gmail.com"
@@ -64,4 +69,4 @@ jobs:
 
           git remote -v
 
-          git push --set-upstream origin stem
+          git push --set-upstream origin stem -f
