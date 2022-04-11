@@ -64,6 +64,7 @@ jobs:
 
           git config --global user.name "hane-smitter"
           git config --global user.email "hanesmitter3@gmail.com"
+          git remote set-url origin https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
           git config -l
 
           git add -A
