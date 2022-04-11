@@ -22,7 +22,8 @@ jobs:
           mkdir jumbo_bids
           cd jumbobids
           git checkout -B stem
-          find . -type d \( -path ./.git -o -path ./stem \) -prune -exec cp -rf -t ../jumbo_bids '{}' '+'
+          cp -r .git ../jumbo_bids
+          cp -r stem ../jumbo_bids
           cd ../jumbo_bids
           find ./stem ! -name "." ! -name ".." -type f,d -exec mv -t . '{}' '+'
           rmdir stem
