@@ -12,7 +12,7 @@ import { errorHandler } from "./_helpers/error/error-handler.js";
 import ErrorRes from "./_helpers/error/ErrorResponse.js";
 // import { updateBidabbles } from "./controllers/admin/bids.js";
 import connectCacheSevice from "./db/services/cache.js";
-// import connectSearch from "./db/services/search-api.js";
+import connectSearchService from "./db/services/search-api.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -58,18 +58,24 @@ app.all("*", (req, res, next) => {
 
 app.use(errorHandler);
 
-
 app.on("ready", function () {
 	app.listen(PORT, () =>
 		console.log(chalk.rgb(208, 60, 240)(`Server listening on port: ${PORT}`))
 	);
 });
 DB.on("connected", function () {
-	// connectSearch();
+	connectSearchService().then(
+		() => {
+			console.log(chalk.rgb(208, 60, 240)("Search Service is connected"));
+		},
+		() => {
+			console.error(chalk.red("SEARCH SERVICE NOT CONNECTED!"));
+		}
+	);
 	console.log(chalk.rgb(208, 60, 240)("DB is connected"));
 	app.emit("ready");
 }).on("error", function () {
-	console.log(chalk.rgb(208, 60, 240)("DB NOT CONNECTED!"));
+	console.log(chalk.red("DB NOT CONNECTED!"));
 });
 
 // handling nodemon restart issues

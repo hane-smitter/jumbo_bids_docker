@@ -5,5 +5,5 @@
 *.log
 .env*
 !.env*.example
-.bak
+*.bak
 /public/imgs/products/*
