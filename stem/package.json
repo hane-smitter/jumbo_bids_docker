@@ -17,7 +17,7 @@
     "docker-rmi:dev": "node scripts/dockerRmi.cjs",
     "start-docker:dev": "node scripts/dockerContainerUp.cjs",
     "stop-docker:dev": "node scripts/dockerContainerDown.cjs",
-    "clean-dockerimg-untagged:dev": "docker rmi $(docker images --filter \"dangling=true\" -q --no-trunc)"
+    "clean-dockerimg-untagged:dev": "docker rmi $(docker images --filter \"dangling=true\" -q --no-trunc) -f"
   },
   "keywords": [],
   "author": "",

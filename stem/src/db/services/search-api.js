@@ -41,7 +41,7 @@ async function index(next, typesense) {
 			next.documentKey._id
 		).populate({
 			path: "product",
-			populate: { path: "category", select: "name" }
+			populate: { path: "category", select: "name description" }
 		});
 		const updateObj = {
 			startTime: bid_prods.startTime,
@@ -49,7 +49,8 @@ async function index(next, typesense) {
 			image: bid_prods.product.thumbnail,
 			bidPrice: bid_prods.bidPrice,
 			brand: bid_prods.product.brand,
-			category: bid_prods.product.category.name
+			category: bid_prods.product.category.name,
+			cat_desc: added_bid_prod.product.category.description
 		};
 		// const biddableProducts = await ProductBidDetail.find({
 		// 	endTime: { $gt: new Date().toISOString() },
@@ -77,7 +78,7 @@ async function index(next, typesense) {
 			next.fullDocument._id
 		).populate({
 			path: "product",
-			populate: { path: "category", select: "name" }
+			populate: { path: "category", select: "name description" }
 		});
 		const addedObj = {
 			startTime: added_bid_prod.startTime,
@@ -85,7 +86,8 @@ async function index(next, typesense) {
 			image: added_bid_prod.product.thumbnail,
 			bidPrice: added_bid_prod.bidPrice,
 			brand: added_bid_prod.product.brand,
-			category: added_bid_prod.product.category.name
+			category: added_bid_prod.product.category.name,
+			cat_desc: added_bid_prod.product.category.description
 		};
 		addedObj.id = next.fullDocument["_id"];
 		delete addedObj._id;
@@ -103,7 +105,7 @@ async function monitorListingsUsingEventEmitter(typesense, timeInMs = 60000) {
 		console.log("ProductBidDetail has changed!!");
 		index(next, typesense);
 	});
-	await closeChangeStream(timeInMs, changeStream);
+	// await closeChangeStream(timeInMs, changeStream);
 }
 
 async function createSchema(schema, typesense) {
@@ -140,7 +142,8 @@ export default function main() {
 					{ name: "brand", type: "string", facet: false },
 					{ name: "category", type: "string", facet: true },
 					{ name: "image", type: "string", facet: false },
-					{ name: "bidPrice", type: "int32", facet: false }
+					{ name: "bidPrice", type: "int32", facet: false },
+					{ name: "cat_desc", type: "string", facet: false }
 				],
 				default_sorting_field: "bidPrice"
 			};

@@ -20,7 +20,7 @@ const command_1 = `npm run start-server:mongo`,
 	command_7 = `docker network connect mongodb_net ${process.env.API_CONTAINER_NAME}`,
 	command_8 = `docker container start ${process.env.API_CONTAINER_NAME}`;
 
-const masterCommand = `${command_1}  && ${command_2} && ${command_3} && ${command_4} && ${command_5} && ${command_6} && ${command_7} && ${command_8}`;
+const masterCommand = `${command_1}  && ${command_2} && ${command_4} && ${command_5} && ${command_6} && ${command_7} && ${command_8}`;
 
 if (process.platform === "linux") {
 	exec(masterCommand, err => {

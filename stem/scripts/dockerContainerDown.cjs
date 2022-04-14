@@ -18,7 +18,7 @@ const command_1 = `npm run stop-server:mongo`,
 	command_7 = `docker rm ${process.env.API_CONTAINER_NAME} -f 1>/dev/null 2>&1 || true`,
 	command_8 = `npm run docker-rmi:dev`;
 
-const masterCommand = `${command_1}  && ${command_2} && ${command_3} && ${command_4} && ${command_5} && ${command_6} && ${command_7} && ${command_8}`;
+const masterCommand = `${command_1}  && ${command_2} && ${command_3} && ${command_4} && ${command_5} && ${command_6} && ${command_7}`;
 
 if (process.platform === "linux") {
 	exec(masterCommand, err => {

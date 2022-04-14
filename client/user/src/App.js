@@ -12,6 +12,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import Detail from "./components/Products/Product/Details";
 import Layout from "./components/Layout";
+import "./typesenseSearchAdapter";
 
 const theme = createTheme({
   palette: {
@@ -47,6 +48,7 @@ const theme = createTheme({
     fontWeightBold: 900,
   },
 });
+
 
 const App = () => {
   return (

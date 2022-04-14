@@ -4,7 +4,7 @@ import axios from "axios";
 const request = axios.create({
   baseURL: `${
     process.env.NODE_ENV === "development"
-      ? "http://localhost:5000"
+      ? "http://localhost:8000"
       : "https://raw-jumbobids.herokuapp.com"
   }/api/u`,
 });
