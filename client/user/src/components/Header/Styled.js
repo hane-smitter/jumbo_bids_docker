@@ -5,20 +5,38 @@ const LogoLink = styled(Link)`
 	display: block;
 	width: 200px;
 `;
-const SearchUnderBoard = styled(Box)`
+const SearchBoard = styled(Box)`
 	position: fixed;
 	top: 0;
 	left: 0;
-  background-color: rgba(18, 18, 18, 0.46);
-  filter: blur(2px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	background-color: rgba(0, 0, 0, 0.76);
 	max-width: 100%;
 	max-height: 100%;
 	height: 100vh;
 	width: 100vw;
-  z-index: ${(theme) => theme.zIndex.drawer};
+	color: ${({ theme }) => theme.palette.common.white};
+	z-index: ${({ theme }) => theme.zIndex.drawer};
+`;
+const SearchUtilsCont = styled(Box)`
+	overscroll-behavior: contain;
+	height: 100%;
+	width: 100%;
+	padding: 20px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	display: block;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: start;
+`;
+const SearchLeftPane = styled(Box)`
+	flex-grow: 0.3;
+	background-color: rgba(0, 0, 0, 0.86);
+	padding: 5px;
+`;
+const SearchRightPane = styled(Box)`
+	flex-grow: 2;
+	padding: 5px;
 `;
 const RouteLink = styled(Link)`
 	display: flex;
@@ -104,7 +122,7 @@ const SearchInput = styled(Input)`
 	border: 2px solid #c0c8d1;
 	border-radius: 4px;
 	color: #333333;
-  filter: blur(0px);
+	filter: blur(0px);
 	& input::placeholder {
 		font-size: 13px;
 	}
@@ -119,7 +137,10 @@ const Styles = {
 	StackCont,
 	RouteLink,
 	SearchInput,
-  SearchUnderBoard
+	SearchBoard,
+	SearchUtilsCont,
+	SearchLeftPane,
+	SearchRightPane
 };
 
 export default Styles;

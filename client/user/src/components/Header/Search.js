@@ -1,31 +1,65 @@
 import React, { useRef, useState } from "react";
-import { FormControl, InputAdornment, Stack, Box } from "@mui/material";
+import {
+	FormControl,
+	InputAdornment,
+	Stack,
+	Box,
+	Typography
+} from "@mui/material";
 import { Clear as ClearIcon, Search as SearchIcon } from "@mui/icons-material";
 import { searchClient } from "src/typesenseSearchAdapter";
-
-import Styled from "./Styled";
 import {
 	InstantSearch,
 	Hits,
-	SearchBox,
+	// SearchBox,
 	Configure,
 	Pagination,
 	Highlight,
 	ClearRefinements,
-	RefinementList
+	RefinementList,
+	connectSearchBox
 } from "react-instantsearch-dom";
+
+import Styled from "./Styled";
+
+function mySearchBox(props) {
+	return (
+		<Box sx={{ width: "100%", p: 1, display: "grid", justifyItems: "center" }}>
+			<form
+				noValidate
+				role="search"
+				// style={{ width: "100%", marginInline: "auto" }}
+			>
+				<Styled.SearchInput
+					color="secondary"
+					placeholder="Search by model, name and more..."
+					value={props.currentRefinement}
+					onChange={e => props.refine(e.currentTarget.value)}
+					// smscreen="1"
+					disableUnderline={true}
+					sx={{ pl: 1 }}
+				/>
+			</form>
+		</Box>
+	);
+}
+
+const CustomSearchBox = connectSearchBox(mySearchBox);
 
 function Hit(props) {
 	return (
-		<div>
-			<img src={props.hit.image} align="left" alt={props.hit.name} />
+		<div style={{ color: "#333" }}>
+			<img src={props.hit.image} height={40} alt={props.hit.name} />
 			<div className="hit-name">
 				<Highlight attribute="name" hit={props.hit} />
+			</div>
+			<div className="hit-category">
+				<Highlight attribute="category" hit={props.hit} />
 			</div>
 			<div className="hit-description">
 				<Highlight attribute="cat_desc" hit={props.hit} />
 			</div>
-			<div className="hit-price">${props.hit.bidPrice}</div>
+			<div className="hit-price">Bid @ Ksh.{props.hit.bidPrice}</div>
 		</div>
 	);
 }
@@ -79,34 +113,42 @@ const Search = ({ lgScreen }) => {
 						onClick={onSearchInputClick}
 					/>
 				)}
-				<InstantSearch
-					indexName="biddable_products"
-					searchClient={searchClient}
-				>
-					{triggerSearch && (
-						<Styled.SearchUnderBoard>
-							<div>
-								<Box>
-									<Box component="span" onClick={onCloseSearchBoard} sx={{cursor: "pointer"}}>
-										<ClearIcon />
-									</Box>
-								</Box>
-								<div className="left-panel">
-									<ClearRefinements />
-									<h2>Brands</h2>
-									<RefinementList attribute="categories" />
-									<Configure hitsPerPage={8} />
-								</div>
-								<div className="right-panel">
-									<SearchBox />
-									<Hits hitComponent={Hit} />
-									<Pagination />
-								</div>
-							</div>
-						</Styled.SearchUnderBoard>
-					)}
-				</InstantSearch>
 			</FormControl>
+			<InstantSearch indexName="biddable_products" searchClient={searchClient}>
+				{triggerSearch && (
+					<Styled.SearchBoard>
+						<Styled.SearchUtilsCont>
+							<Box sx={{ alignSelf: "start", width: "100%" }}>
+								<Box
+									sx={{ p: 1 }}
+									component="span"
+									onClick={onCloseSearchBoard}
+									sx={{ cursor: "pointer" }}
+								>
+									<ClearIcon />
+								</Box>
+							</Box>
+							<Box sx={{ display: "flex", width: "100%", alignItems: "start" }}>
+								<Styled.SearchLeftPane>
+									<ClearRefinements />
+									<Typography variant="h4" gutterBottom>
+										Categories
+									</Typography>
+									<RefinementList attribute="category" />
+								</Styled.SearchLeftPane>
+								<Styled.SearchRightPane>
+									<CustomSearchBox />
+									{/* <SearchBox /> */}
+
+									<Hits hitComponent={Hit} />
+									<Configure hitsPerPage={8} />
+									<Pagination />
+								</Styled.SearchRightPane>
+							</Box>
+						</Styled.SearchUtilsCont>
+					</Styled.SearchBoard>
+				)}
+			</InstantSearch>
 			<Styled.Btn
 				search="1"
 				color="secondary"

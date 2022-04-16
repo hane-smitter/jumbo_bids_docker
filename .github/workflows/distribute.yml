@@ -57,3 +57,5 @@ jobs:
           git commit -m "Client.admin branch update $GITHUB_JOB"
 
           git push --set-upstream origin client.admin -f
+
+          rm -rf jumbo_bids_tmp

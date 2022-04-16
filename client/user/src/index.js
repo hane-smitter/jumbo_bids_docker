@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 // import { AnimatePresence } from "framer-motion";
 import "@fontsource/lato";
 import { StyledEngineProvider } from "@mui/material/styles";
+import "instantsearch.css/themes/satellite.css";
 
 // import "./components/Fonts/TickingTimebombBB.ttf";
 import store from "./redux/store";
