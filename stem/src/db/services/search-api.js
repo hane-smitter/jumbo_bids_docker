@@ -1,8 +1,7 @@
-import mongoose from "mongoose";
 import Typesense from "typesense";
+import { decode } from "html-entities";
 
 import ProductBidDetail from "../../models/ProductBidDetail.js";
-import { DB } from "../mongoose.js";
 
 let CONNECTION_URL = process.env.MONGODB;
 if (
@@ -49,8 +48,8 @@ async function index(next, typesense) {
 			image: bid_prods.product.thumbnail,
 			bidPrice: bid_prods.bidPrice,
 			brand: bid_prods.product.brand,
-			category: bid_prods.product.category.name,
-			cat_desc: added_bid_prod.product.category.description,
+			category: decode(bid_prods.product.category.name || ""),
+			cat_desc: decode(added_bid_prod.product.category.description || ""),
 			productId: added_bid_prod.product._id
 		};
 		// const biddableProducts = await ProductBidDetail.find({
@@ -87,8 +86,8 @@ async function index(next, typesense) {
 			image: added_bid_prod.product.thumbnail,
 			bidPrice: added_bid_prod.bidPrice,
 			brand: added_bid_prod.product.brand,
-			category: added_bid_prod.product.category.name,
-			cat_desc: added_bid_prod.product.category.description,
+			category: decode(added_bid_prod.product.category.name || ""),
+			cat_desc: decode(added_bid_prod.product.category.description || ""),
 			productId: added_bid_prod.product._id
 		};
 		addedObj.id = next.fullDocument["_id"];

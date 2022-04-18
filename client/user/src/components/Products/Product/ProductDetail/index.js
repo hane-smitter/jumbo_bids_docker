@@ -92,10 +92,7 @@ const ProductDetail = ({ product }) => {
 			<SeeDetailsBtn
 				size="small"
 				component={Link}
-				to={{
-					path: `/detail/${product._id}`,
-					search: `?productId=${product.product._id}`
-				}}
+				to={`/detail/${product._id}?productId=${product.product._id}`}
 				state={{ product }}
 				variant="contained"
 			>

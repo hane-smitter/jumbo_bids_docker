@@ -35,6 +35,10 @@ const SearchLeftPane = styled(Box)`
 	flex-grow: 0.3;
 	background-color: rgba(0, 0, 0, 0.86);
 	padding: 5px;
+
+	@media (max-width: 600px) {
+		display: none;
+	}
 `;
 const SearchRightPane = styled(Box)`
 	flex-grow: 2;

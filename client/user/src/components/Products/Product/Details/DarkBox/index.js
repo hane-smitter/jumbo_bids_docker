@@ -33,7 +33,7 @@ const DarkBox = ({ product, topBidder }) => {
 
 	//form initial values
 	let initialValues = {
-		bidAmount: product?.bidPrice,
+		bidAmount: product?.bidPrice || "",
 		bidder: {
 			phone: "",
 			acknowledgeNew: newBidder,
@@ -41,7 +41,7 @@ const DarkBox = ({ product, topBidder }) => {
 			lastname: "",
 			location: ""
 		},
-		bidPrice: product?.bidPrice,
+		bidPrice: product?.bidPrice || "",
 		productId: product?.product?._id
 	};
 	if (newBidder) {

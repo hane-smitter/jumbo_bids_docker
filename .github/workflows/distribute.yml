@@ -5,61 +5,6 @@ on:
     branches:
       - main
 
-# jobs:
-#   distribute:
-#     runs-on: ubuntu-latest
-#     name: "Distribute code"
-#     steps:
-#       - uses: actions/checkout@v2
-#         with:
-#           ref: main
-#       - name: "Split code to branches"
-#         env:
-#           GH_ACESS_TKN: ${{ secrets.GH_ACESS_TKN }}
-#         run: |
-#           git clone https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
-
-#           mkdir jumbo_bids_tmp
-#           cd jumbobids
-
-#           git config --global user.name "hane-smitter"
-#           git config --global user.email "hanesmitter3@gmail.com"
-#           git remote set-url origin https://hane-smitter:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
-
-#           # stem source code
-#           git checkout --orphan stem
-#           cp -rf ./stem ../jumbo_bids_tmp/
-#           rm -rf *
-#           cp -rf ../jumbo_bids_tmp/stem/* .
-#           git add -A
-#           git commit -m "Stem branch update $GITHUB_RUN_ID"
-
-#           git push --set-upstream origin stem -f
-
-#           # client.user source code
-#           git checkout main
-#           git checkout --orphan client.user
-#           cp -rf ./client/user ../jumbo_bids_tmp/
-#           rm -rf *
-#           cp -rf ../jumbo_bids_tmp/user/* .
-#           git add -A
-#           git commit -m "Client.user branch update $GITHUB_RUN_ID"
-
-#           git push --set-upstream origin client.user -f
-
-#           # client.admin source code
-#           git checkout main
-#           git checkout --orphan client.admin
-#           cp -rf ./client/admin ../jumbo_bids_tmp/
-#           rm -rf *
-#           cp -rf ../jumbo_bids_tmp/admin/* .
-#           git add -A
-#           git commit -m "Client.admin branch update $GITHUB_RUN_ID"
-
-#           git push --set-upstream origin client.admin -f
-
-#           rm -rf jumbo_bids_tmp
-
 env:
   GH_ACESS_TKN: ${{ secrets.GH_ACESS_TKN }}
   USERNAME: "hane-smitter"
@@ -132,7 +77,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: main
-      - name: "Split code to client.user branch"
+      - name: "Split code to client.admin branch"
         run: |
           git clone -b main https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
 

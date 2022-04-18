@@ -64,10 +64,10 @@ const Hits = ({ hits, searchBoardOpener }) => (
 			<li key={hit.objectID}>
 				<Link
 					size="small"
-					component={RouterLink}
+					// component={RouterLink}
 					sx={{ color: "#333", display: "inline-block" }}
 					underline="none"
-					to={`/detail/${hit.id}?productId=${hit.productId}`}
+					href={`/detail/${hit.id}?productId=${hit.productId}`}
 					onClick={() => searchBoardOpener(false)}
 				>
 					<img
@@ -76,15 +76,15 @@ const Hits = ({ hits, searchBoardOpener }) => (
 						alt={hit.name}
 						style={{ borderRadius: 10 }}
 					/>
-					<div className="hit-name">
+					<Typography variant="h5" className="hit-name">
 						<Highlight attribute="name" hit={hit} />
-					</div>
-					<div className="hit-category">
+					</Typography>
+					<Typography variant="body1" className="hit-category">
 						<Highlight attribute="category" hit={hit} />
-					</div>
-					<div className="hit-description">
+					</Typography>
+					<Typography variant="body2" className="hit-description">
 						<Highlight attribute="cat_desc" hit={hit} />
-					</div>
+					</Typography>
 					<Typography variant="caption" className="hit-price">
 						Bid @ Ksh.{hit.bidPrice}
 					</Typography>
@@ -152,18 +152,24 @@ const Search = ({ lgScreen }) => {
 						<Styled.SearchUtilsCont>
 							<Box sx={{ alignSelf: "start", width: "100%" }}>
 								<Box
-									sx={{ p: 1 }}
+									sx={{ p: 1, cursor: "pointer" }}
 									component="span"
 									onClick={onCloseSearchBoard}
-									sx={{ cursor: "pointer" }}
 								>
 									<ClearIcon />
 								</Box>
 							</Box>
-							<Box sx={{ display: "flex", width: "100%", alignItems: "start" }}>
+							<Box
+								sx={{
+									display: "flex",
+									width: "100%",
+									alignItems: "stretch",
+									minHeight: 400
+								}}
+							>
 								<Styled.SearchLeftPane>
 									<ClearRefinements />
-									<Typography variant="h4" gutterBottom>
+									<Typography variant="h5" gutterBottom>
 										Categories
 									</Typography>
 									<RefinementList attribute="category" />
