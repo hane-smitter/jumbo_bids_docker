@@ -78,6 +78,8 @@ jobs:
           git config --global user.name "hane-smitter"
           git config --global user.email "hanesmitter3@gmail.com"
           git remote set-url origin https://hane-smitter:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
+          echo "prep workdir ls"
+          ls
   apisourcecode:
     needs: prepworkdir
     runs-on: ubuntu-latest
@@ -88,6 +90,8 @@ jobs:
           ref: main
       - name: "Split code to stem branch"
         run: |
+          echo "stem ls"
+          ls
           cd jumbobids
 
           # stem source code
@@ -109,6 +113,8 @@ jobs:
           ref: main
       - name: "Split code to client.user branch"
         run: |
+          echo "client.user ls"
+          ls
           cd jumbobids
 
           # client.user source code
@@ -131,6 +137,8 @@ jobs:
           ref: main
       - name: "Split code to client.user branch"
         run: |
+          echo "client.admin ls"
+          ls
           cd jumbobids
 
           # client.admin source code
@@ -145,7 +153,7 @@ jobs:
           git push --set-upstream origin client.admin -f
 
   cleartmpdir:
-    needs: clientadminsourcecode
+    needs: [clientusersourcecode, clientadminsourcecode]
     runs-on: ubuntu-latest
     name: "clear temporary work dir"
     steps:
