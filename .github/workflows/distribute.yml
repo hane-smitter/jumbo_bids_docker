@@ -62,35 +62,11 @@ on:
 
 env:
   GH_ACESS_TKN: ${{ secrets.GH_ACESS_TKN }}
+  USERNAME: "hane-smitter"
+  USER_EMAIL: "hanesmitter3@gmail.com"
 
 jobs:
-  prepworkdir:
-    runs-on: ubuntu-latest
-    name: "Prepare Working Directory"
-    steps:
-      - name: "prepare working space"
-        run: |
-          git clone https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
-
-          mkdir jumbo_bids_tmp
-
-          echo "prep workdir b4 cd into jumbobids ls"
-          ls
-          echo "pwd b4 cd into jumbobids ls"
-          pwd
-
-          cd jumbobids
-
-          git config --global user.name "hane-smitter"
-          git config --global user.email "hanesmitter3@gmail.com"
-          git remote set-url origin https://hane-smitter:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
-
-          echo "prep workdir pwd"
-          pwd
-          echo "prep workdir ls"
-          ls
   apisourcecode:
-    needs: prepworkdir
     runs-on: ubuntu-latest
     name: "Get API source code"
     steps:
@@ -99,10 +75,15 @@ jobs:
           ref: main
       - name: "Split code to stem branch"
         run: |
-          echo "stem ls"
-          ls
-          echo "pwd @ stem apisourcecode"
-          pwd
+          git clone -b main https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
+
+          mkdir jumbo_bids_tmp
+
+          cd jumbobids
+
+          git config --global user.name $USERNAME
+          git config --global user.email $USER_EMAIL
+          git remote set-url origin https://$USERNAME:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
           cd jumbobids
 
           # stem source code
@@ -124,8 +105,15 @@ jobs:
           ref: main
       - name: "Split code to client.user branch"
         run: |
-          echo "client.user ls"
-          ls
+          git clone -b main https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
+
+          mkdir jumbo_bids_tmp
+
+          cd jumbobids
+
+          git config --global user.name $USERNAME
+          git config --global user.email $USER_EMAIL
+          git remote set-url origin https://$USERNAME:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
           cd jumbobids
 
           # client.user source code
@@ -148,8 +136,15 @@ jobs:
           ref: main
       - name: "Split code to client.user branch"
         run: |
-          echo "client.admin ls"
-          ls
+          git clone -b main https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
+
+          mkdir jumbo_bids_tmp
+
+          cd jumbobids
+
+          git config --global user.name $USERNAME
+          git config --global user.email $USER_EMAIL
+          git remote set-url origin https://$USERNAME:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
           cd jumbobids
 
           # client.admin source code
@@ -162,11 +157,3 @@ jobs:
           git commit -m "Client.admin branch update $GITHUB_RUN_ID"
 
           git push --set-upstream origin client.admin -f
-
-  cleartmpdir:
-    needs: [clientusersourcecode, clientadminsourcecode]
-    runs-on: ubuntu-latest
-    name: "clear temporary work dir"
-    steps:
-      - name: "remove temporary directory"
-        run: rm -rf jumbo_bids_tmp
