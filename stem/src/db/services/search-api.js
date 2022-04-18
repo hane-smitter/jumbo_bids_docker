@@ -50,7 +50,8 @@ async function index(next, typesense) {
 			bidPrice: bid_prods.bidPrice,
 			brand: bid_prods.product.brand,
 			category: bid_prods.product.category.name,
-			cat_desc: added_bid_prod.product.category.description
+			cat_desc: added_bid_prod.product.category.description,
+			productId: added_bid_prod.product._id
 		};
 		// const biddableProducts = await ProductBidDetail.find({
 		// 	endTime: { $gt: new Date().toISOString() },
@@ -87,7 +88,8 @@ async function index(next, typesense) {
 			bidPrice: added_bid_prod.bidPrice,
 			brand: added_bid_prod.product.brand,
 			category: added_bid_prod.product.category.name,
-			cat_desc: added_bid_prod.product.category.description
+			cat_desc: added_bid_prod.product.category.description,
+			productId: added_bid_prod.product._id
 		};
 		addedObj.id = next.fullDocument["_id"];
 		delete addedObj._id;
@@ -143,7 +145,8 @@ export default function main() {
 					{ name: "category", type: "string", facet: true },
 					{ name: "image", type: "string", facet: false },
 					{ name: "bidPrice", type: "int32", facet: false },
-					{ name: "cat_desc", type: "string", facet: false }
+					{ name: "cat_desc", type: "string", facet: false },
+					{ name: "productId", type: "string", facet: false }
 				],
 				default_sorting_field: "bidPrice"
 			};

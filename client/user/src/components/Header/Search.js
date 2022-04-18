@@ -10,15 +10,18 @@ import { Clear as ClearIcon, Search as SearchIcon } from "@mui/icons-material";
 import { searchClient } from "src/typesenseSearchAdapter";
 import {
 	InstantSearch,
-	Hits,
+	// Hits,
 	// SearchBox,
 	Configure,
 	Pagination,
 	Highlight,
 	ClearRefinements,
 	RefinementList,
-	connectSearchBox
+	connectSearchBox,
+	connectHits
 } from "react-instantsearch-dom";
+import { Link as RouterLink } from "react-router-dom";
+import { Link } from "@mui/material";
 
 import Styled from "./Styled";
 
@@ -32,9 +35,10 @@ function mySearchBox(props) {
 			>
 				<Styled.SearchInput
 					color="secondary"
-					placeholder="Search by model, name and more..."
+					placeholder="Search by brand, name and more..."
 					value={props.currentRefinement}
 					onChange={e => props.refine(e.currentTarget.value)}
+					autoFocus
 					// smscreen="1"
 					disableUnderline={true}
 					sx={{ pl: 1 }}
@@ -46,23 +50,51 @@ function mySearchBox(props) {
 
 const CustomSearchBox = connectSearchBox(mySearchBox);
 
-function Hit(props) {
-	return (
-		<div style={{ color: "#333" }}>
-			<img src={props.hit.image} height={40} alt={props.hit.name} />
-			<div className="hit-name">
-				<Highlight attribute="name" hit={props.hit} />
-			</div>
-			<div className="hit-category">
-				<Highlight attribute="category" hit={props.hit} />
-			</div>
-			<div className="hit-description">
-				<Highlight attribute="cat_desc" hit={props.hit} />
-			</div>
-			<div className="hit-price">Bid @ Ksh.{props.hit.bidPrice}</div>
-		</div>
-	);
-}
+const Hits = ({ hits, searchBoardOpener }) => (
+	<ol
+		style={{
+			listStyleType: "none",
+			backgroundColor: "#fff",
+			display: "flex",
+			flexDirection: "column",
+			gap: 10
+		}}
+	>
+		{hits.map(hit => (
+			<li key={hit.objectID}>
+				<Link
+					size="small"
+					component={RouterLink}
+					sx={{ color: "#333", display: "inline-block" }}
+					underline="none"
+					to={`/detail/${hit.id}?productId=${hit.productId}`}
+					onClick={() => searchBoardOpener(false)}
+				>
+					<img
+						src={hit.image}
+						height={40}
+						alt={hit.name}
+						style={{ borderRadius: 10 }}
+					/>
+					<div className="hit-name">
+						<Highlight attribute="name" hit={hit} />
+					</div>
+					<div className="hit-category">
+						<Highlight attribute="category" hit={hit} />
+					</div>
+					<div className="hit-description">
+						<Highlight attribute="cat_desc" hit={hit} />
+					</div>
+					<Typography variant="caption" className="hit-price">
+						Bid @ Ksh.{hit.bidPrice}
+					</Typography>
+				</Link>
+			</li>
+		))}
+	</ol>
+);
+
+const CustomHits = connectHits(Hits);
 
 const Search = ({ lgScreen }) => {
 	const [triggerSearch, setTriggerSearch] = useState(false);
@@ -92,7 +124,7 @@ const Search = ({ lgScreen }) => {
 				{lgScreen ? (
 					<Styled.SearchInput
 						color="secondary"
-						placeholder="Search inventory by model, name and more..."
+						placeholder="Search inventory by category, name and more..."
 						disableUnderline={true}
 						ref={searchInpPointer}
 						onClick={onSearchInputClick}
@@ -105,7 +137,7 @@ const Search = ({ lgScreen }) => {
 				) : (
 					<Styled.SearchInput
 						color="secondary"
-						placeholder="Search by model, name and more..."
+						placeholder="Search by brand, name and more..."
 						smscreen="1"
 						disableUnderline={true}
 						ref={searchInpPointer}
@@ -140,7 +172,8 @@ const Search = ({ lgScreen }) => {
 									<CustomSearchBox />
 									{/* <SearchBox /> */}
 
-									<Hits hitComponent={Hit} />
+									{/* <Hits hitComponent={Hit} /> */}
+									<CustomHits searchBoardOpener={setTriggerSearch} />
 									<Configure hitsPerPage={8} />
 									<Pagination />
 								</Styled.SearchRightPane>

@@ -58,12 +58,12 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="register" element={<Register />} />
-            <Route path="login" element={<Login />} />
-            <Route path="faqs" element={<Faqs />} />
-            <Route path="pastbids" element={<PastBids />} />
-            <Route path="product/create" element={<Form />} />
-            <Route path="detail" element={<Detail />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/faqs" element={<Faqs />} />
+            <Route path="/pastbids" element={<PastBids />} />
+            {/* <Route path="product/create" element={<Form />} /> */}
+            <Route path="/detail/:bidId" element={<Detail />} />
           </Route>
         </Routes>
       </Router>

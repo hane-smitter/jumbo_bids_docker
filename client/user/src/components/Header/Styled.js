@@ -9,7 +9,10 @@ const SearchBoard = styled(Box)`
 	position: fixed;
 	top: 0;
 	left: 0;
-	background-color: rgba(0, 0, 0, 0.76);
+	background-color: rgba(0, 0, 0, 0.86);
+	backdrop-filter: blur(25px);
+	overflow: auto;
+	overscroll-behavior: contain;
 	max-width: 100%;
 	max-height: 100%;
 	height: 100vh;
@@ -18,7 +21,6 @@ const SearchBoard = styled(Box)`
 	z-index: ${({ theme }) => theme.zIndex.drawer};
 `;
 const SearchUtilsCont = styled(Box)`
-	overscroll-behavior: contain;
 	height: 100%;
 	width: 100%;
 	padding: 20px;
@@ -27,7 +29,7 @@ const SearchUtilsCont = styled(Box)`
 	display: block;
 	flex-wrap: wrap;
 	justify-content: center;
-	align-items: start;
+	align-items: stretch;
 `;
 const SearchLeftPane = styled(Box)`
 	flex-grow: 0.3;
