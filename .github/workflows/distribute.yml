@@ -85,7 +85,6 @@ jobs:
           git config --global user.name $USERNAME
           git config --global user.email $USER_EMAIL
           git remote set-url origin https://$USERNAME:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
-          cd jumbobids
 
           # stem source code
           git checkout --orphan stem
@@ -109,13 +108,11 @@ jobs:
           git clone -b main https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
 
           mkdir jumbo_bids_tmp
-
           cd jumbobids
 
           git config --global user.name $USERNAME
           git config --global user.email $USER_EMAIL
           git remote set-url origin https://$USERNAME:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
-          cd jumbobids
 
           # client.user source code
           git checkout main
@@ -140,13 +137,11 @@ jobs:
           git clone -b main https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
 
           mkdir jumbo_bids_tmp
-
           cd jumbobids
 
           git config --global user.name $USERNAME
           git config --global user.email $USER_EMAIL
           git remote set-url origin https://$USERNAME:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
-          cd jumbobids
 
           # client.admin source code
           git checkout main
