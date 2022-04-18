@@ -78,7 +78,8 @@ jobs:
           git clone -b main https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
 
           mkdir jumbo_bids_tmp
-
+          echo "jumbobids si uko"
+          ls
           cd jumbobids
 
           git config --global user.name $USERNAME
