@@ -149,5 +149,5 @@ jobs:
     runs-on: ubuntu-latest
     name: "clear temporary work dir"
     steps:
-      run: |
-        rm -rf jumbo_bids_tmp
+      - name: "remove temporary directory"
+        run: rm -rf jumbo_bids_tmp
