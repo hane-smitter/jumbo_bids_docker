@@ -73,13 +73,20 @@ jobs:
           git clone https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
 
           mkdir jumbo_bids_tmp
+
           echo "prep workdir b4 cd into jumbobids ls"
           ls
+          echo "pwd b4 cd into jumbobids ls"
+          pwd
+
           cd jumbobids
 
           git config --global user.name "hane-smitter"
           git config --global user.email "hanesmitter3@gmail.com"
           git remote set-url origin https://hane-smitter:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
+
+          echo "prep workdir pwd"
+          pwd
           echo "prep workdir ls"
           ls
   apisourcecode:
@@ -94,6 +101,8 @@ jobs:
         run: |
           echo "stem ls"
           ls
+          echo "pwd @ stem apisourcecode"
+          pwd
           cd jumbobids
 
           # stem source code
