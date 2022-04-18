@@ -116,9 +116,10 @@ async function createSchema(schema, typesense) {
 		return value["name"] == schema["name"];
 	});
 
-	if (!toCreate) {
-		await typesense.collections().create(schema);
-	}
+	// if (!toCreate) {
+	// 	await typesense.collections().create(schema);
+	// }
+	await typesense.collections().create(schema);
 }
 
 export default function main() {

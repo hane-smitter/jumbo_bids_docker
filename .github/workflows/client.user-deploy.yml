@@ -29,6 +29,10 @@ jobs:
         run: npm run build
         env:
           CI: false
+          REACT_APP_TYPESENSE_API_KEY: ${{ secrets.TYPESENSE_SEARCH_ONLY_KEY }}
+          REACT_APP_TYPESENSE_CLOUD_HOST: ${{ secrets.TYPESENSE_CLOUD_HOST }}
+          REACT_APP_TYPESENSE_CLOUD_PORT: ${{ secrets.TYPESENSE_CLOUD_PORT }}
+          REACT_APP_TYPESENSE_CLOUD_PROTOCOL: "https"
 
       - name: Deploy to netlify
         uses: netlify/actions/cli@master

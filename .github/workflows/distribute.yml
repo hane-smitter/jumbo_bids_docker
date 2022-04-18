@@ -32,7 +32,7 @@ jobs:
           rm -rf *
           cp -rf ../jumbo_bids_tmp/stem/* .
           git add -A
-          git commit -m "Stem branch update $GITHUB_JOB"
+          git commit -m "Stem branch update $GITHUB_RUN_ID"
 
           git push --set-upstream origin stem -f
 
@@ -43,7 +43,7 @@ jobs:
           rm -rf *
           cp -rf ../jumbo_bids_tmp/user/* .
           git add -A
-          git commit -m "Client.user branch update $GITHUB_JOB"
+          git commit -m "Client.user branch update $GITHUB_RUN_ID"
 
           git push --set-upstream origin client.user -f
 
@@ -54,7 +54,7 @@ jobs:
           rm -rf *
           cp -rf ../jumbo_bids_tmp/admin/* .
           git add -A
-          git commit -m "Client.admin branch update $GITHUB_JOB"
+          git commit -m "Client.admin branch update $GITHUB_RUN_ID"
 
           git push --set-upstream origin client.admin -f
 
