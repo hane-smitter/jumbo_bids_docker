@@ -73,6 +73,8 @@ jobs:
           git clone https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
 
           mkdir jumbo_bids_tmp
+          echo "prep workdir b4 cd into jumbobids ls"
+          ls
           cd jumbobids
 
           git config --global user.name "hane-smitter"
