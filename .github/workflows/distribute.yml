@@ -5,17 +5,70 @@ on:
     branches:
       - main
 
+# jobs:
+#   distribute:
+#     runs-on: ubuntu-latest
+#     name: "Distribute code"
+#     steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           ref: main
+#       - name: "Split code to branches"
+#         env:
+#           GH_ACESS_TKN: ${{ secrets.GH_ACESS_TKN }}
+#         run: |
+#           git clone https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
+
+#           mkdir jumbo_bids_tmp
+#           cd jumbobids
+
+#           git config --global user.name "hane-smitter"
+#           git config --global user.email "hanesmitter3@gmail.com"
+#           git remote set-url origin https://hane-smitter:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
+
+#           # stem source code
+#           git checkout --orphan stem
+#           cp -rf ./stem ../jumbo_bids_tmp/
+#           rm -rf *
+#           cp -rf ../jumbo_bids_tmp/stem/* .
+#           git add -A
+#           git commit -m "Stem branch update $GITHUB_RUN_ID"
+
+#           git push --set-upstream origin stem -f
+
+#           # client.user source code
+#           git checkout main
+#           git checkout --orphan client.user
+#           cp -rf ./client/user ../jumbo_bids_tmp/
+#           rm -rf *
+#           cp -rf ../jumbo_bids_tmp/user/* .
+#           git add -A
+#           git commit -m "Client.user branch update $GITHUB_RUN_ID"
+
+#           git push --set-upstream origin client.user -f
+
+#           # client.admin source code
+#           git checkout main
+#           git checkout --orphan client.admin
+#           cp -rf ./client/admin ../jumbo_bids_tmp/
+#           rm -rf *
+#           cp -rf ../jumbo_bids_tmp/admin/* .
+#           git add -A
+#           git commit -m "Client.admin branch update $GITHUB_RUN_ID"
+
+#           git push --set-upstream origin client.admin -f
+
+#           rm -rf jumbo_bids_tmp
+
+env:
+  GH_ACESS_TKN: ${{ secrets.GH_ACESS_TKN }}
+
 jobs:
-  distribute:
+  prepworkdir:
     runs-on: ubuntu-latest
-    name: "Distribute code"
+    name: "Prepare Working Directory"
     steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: main
-      - name: "Split code to branches"
-        env:
-          GH_ACESS_TKN: ${{ secrets.GH_ACESS_TKN }}
+      - name: "prepare working space"
         run: |
           git clone https://user:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker jumbobids
 
@@ -25,6 +78,17 @@ jobs:
           git config --global user.name "hane-smitter"
           git config --global user.email "hanesmitter3@gmail.com"
           git remote set-url origin https://hane-smitter:$GH_ACESS_TKN@github.com/hane-smitter/jumbo_bids_docker.git
+  apisourcecode:
+    needs: prepworkdir
+    runs-on: ubuntu-latest
+    name: "Get API source code"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+      - name: "Split code to stem branch"
+        run: |
+          cd jumbobids
 
           # stem source code
           git checkout --orphan stem
@@ -35,6 +99,17 @@ jobs:
           git commit -m "Stem branch update $GITHUB_RUN_ID"
 
           git push --set-upstream origin stem -f
+  clientusersourcecode:
+    needs: apisourcecode
+    runs-on: ubuntu-latest
+    name: "Get client.user source code"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+      - name: "Split code to client.user branch"
+        run: |
+          cd jumbobids
 
           # client.user source code
           git checkout main
@@ -46,6 +121,17 @@ jobs:
           git commit -m "Client.user branch update $GITHUB_RUN_ID"
 
           git push --set-upstream origin client.user -f
+  clientadminsourcecode:
+    needs: apisourcecode
+    runs-on: ubuntu-latest
+    name: "Get client.admin source code"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+      - name: "Split code to client.user branch"
+        run: |
+          cd jumbobids
 
           # client.admin source code
           git checkout main
@@ -58,4 +144,10 @@ jobs:
 
           git push --set-upstream origin client.admin -f
 
-          rm -rf jumbo_bids_tmp
+  cleartmpdir:
+    needs: clientadminsourcecode
+    runs-on: ubuntu-latest
+    name: "clear temporary work dir"
+    steps:
+      run: |
+        rm -rf jumbo_bids_tmp
