@@ -13,6 +13,7 @@ import Login from "./components/Login";
 import Detail from "./components/Products/Product/Details";
 import Layout from "./components/Layout";
 import "./typesenseSearchAdapter";
+import NotFound from "./pages/NotFound";
 
 const theme = createTheme({
   palette: {
@@ -64,6 +65,7 @@ const App = () => {
             <Route path="/pastbids" element={<PastBids />} />
             {/* <Route path="product/create" element={<Form />} /> */}
             <Route path="/detail/:bidId" element={<Detail />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </Router>

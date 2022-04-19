@@ -29,9 +29,15 @@ const Detail = () => {
 	const productId = query.get("productId");
 	const { bidId } = useParams();
 
-	console.log("hey productId", productId);
+	// console.log("hey productId", productId);
 
 	function rehydrateProduct(bidId, productId) {
+		if (bidId) {
+			storeService.saveBidInViewId = bidId;
+		}
+		if (productId) {
+			storeService.saveProductInViewId = productId;
+		}
 		dispatch(getProductDetails(bidId, productId));
 	}
 
@@ -43,8 +49,8 @@ const Detail = () => {
 			setProduct(routeStateProduct);
 		}
 		rehydrateProduct(
-			bidId || routeStateProduct._id || storeService.bidInView,
-			productId || routeStateProduct.product._id || storeService.productInView
+			bidId || routeStateProduct?._id || storeService.bidInView,
+			productId || routeStateProduct?.product?._id || storeService.productInView
 		);
 		return () => {
 			dispatch(unsetErr());
