@@ -1,0 +1,51 @@
+{
+  "name": "jumbobids-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon --delay 500ms src/index.js",
+    "start-server:search": "node scripts/typesenseContainerUp.cjs",
+    "stop-server:search": "node scripts/typesenseContainerDown.cjs",
+    "start-server:redis": "node scripts/redisContainerUp.cjs",
+    "stop-server:redis": "node scripts/redisContainerDown.cjs",
+    "start-server:mongo": "node scripts/mongoContainerUp.cjs",
+    "stop-server:mongo": "node scripts/mongoContainerDown.cjs",
+    "docker-build:dev": "node scripts/dockerBuild.cjs",
+    "docker-rmi:dev": "node scripts/dockerRmi.cjs",
+    "start-docker:dev": "node scripts/dockerContainerUp.cjs",
+    "stop-docker:dev": "node scripts/dockerContainerDown.cjs",
+    "clean-dockerimg-untagged:dev": "docker rmi $(docker images --filter \"dangling=true\" -q --no-trunc) -f"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.1",
+    "chalk": "^4.1.2",
+    "cloudinary": "^1.28.1",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "cron": "^1.8.2",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "express-validator": "^6.14.0",
+    "hashids": "^2.2.10",
+    "html-entities": "^2.3.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.8",
+    "multer": "^1.4.4",
+    "nanoid": "^3.3.1",
+    "node-schedule": "^2.1.0",
+    "nodemailer": "^6.7.2",
+    "redis": "^4.0.2",
+    "typesense": "^1.2.2",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
